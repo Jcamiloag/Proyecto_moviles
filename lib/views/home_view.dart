@@ -7,7 +7,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // Número de pestañas
+      length: 2, // Número de pestañas
       child: BaseView(
         title: 'ACADEMIA FARFALA',
         initialIndex: 1,
@@ -36,13 +36,13 @@ class HomeView extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: <Widget>[
-                  // *Pestaña Cloud - GridView con 7 ítems personalizados*
+                  // Pestaña clases 
                   GridViewBuilder(items: [
                     "Pole Sport", "Sexy Pole", "Baile en silla", "Twerk", "Baile Urbano", "Bachata y salsa", "Funcional"
                   ]),
 
-                  // *Otras pestañas*
-                  //const Center(child: Text("Bienvenido")),
+                  // Segunda pestaña de saludo 
+              
                   Image.asset(
                     ('assets/images/imagen_1.jpg'),
                     width: 200,
