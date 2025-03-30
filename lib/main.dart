@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hola_mundo/routes/app_router.dart';
+import 'themes/app_theme.dart';
 
-import 'themes/app_theme.dart'; // Importa el tema
-
-void main() {
+Future<void> main() async {
+  await dotenv.load(); // Cargar variables de entorno antes de correr la app
   runApp(const MyApp());
 }
 
@@ -12,12 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //go_router para navegacion
     return MaterialApp.router(
-      theme:
-          AppTheme.lightTheme, //thema personalizado y permamente en toda la app
-      title: 'Academia Farfala', // Usa el tema personalizado
-      routerConfig: appRouter, // Usa el router configurado
+      theme: AppTheme.lightTheme,
+      title: 'Academia Farfala',
+      routerConfig: appRouter,
     );
   }
 }
+

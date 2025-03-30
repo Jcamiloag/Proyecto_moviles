@@ -100,6 +100,14 @@ class CustomDrawer extends StatelessWidget {
               context.goNamed('isolate');
             },
           ),
+          //!DOGS
+          ListTile(
+            leading: const Icon(Icons.pets),
+            title: const Text('Perros'),
+            onTap: () {
+              context.goNamed('dogListView');
+            },
+          ),
         ],
       ),
     );

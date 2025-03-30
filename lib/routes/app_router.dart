@@ -9,41 +9,35 @@ import 'package:hola_mundo/views/settings_view.dart';
 import 'package:hola_mundo/views/future/future_view.dart';
 import 'package:hola_mundo/views/timer/timer_view.dart';
 import 'package:hola_mundo/views/isolate/isolate_view.dart';
+import 'package:hola_mundo/views/dog/dog_list_view.dart';
+import 'package:hola_mundo/views/dog/dog_detail_view.dart' as dogDetail;
 
 final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const HomeView(), // Usa HomeView
+      builder: (context, state) => const HomeView(),
     ),
     GoRoute(
       path: '/settings',
-      builder: (context, state) => const SettingsView(), // Usa SettingsView
+      builder: (context, state) => const SettingsView(),
     ),
     GoRoute(
       path: '/profile',
-      builder: (context, state) => const ProfileView(), // Usa ProfileView
+      builder: (context, state) => const ProfileView(),
     ),
-
-    // Rutas para el paso de parámetros
     GoRoute(
       path: '/paso_parametros',
       builder: (context, state) => const PasoParametrosScreen(),
     ),
-    // !Ruta para el detalle con parámetros
     GoRoute(
-      path:
-          '/detalle/:parametro/:metodo', //la ruta recibe dos parametros los " : " indican que son parametros
+      path: '/detalle/:parametro/:metodo',
       builder: (context, state) {
-        //*se capturan los parametros recibidos
-        // declarando las variables parametro y metodo
-        // es final porque no se van a modificar
         final parametro = state.pathParameters['parametro']!;
         final metodo = state.pathParameters['metodo']!;
         return DetalleScreen(parametro: parametro, metodoNavegacion: metodo);
       },
     ),
-    //!Ruta para el ciclo de vida
     GoRoute(
       path: '/ciclo_vida',
       builder: (context, state) => const CicloVidaScreen(),
@@ -53,17 +47,28 @@ final GoRouter appRouter = GoRouter(
       name: 'future',
       builder: (context, state) => const FutureView(),
     ),
-    //!Ruta para el demo de Timer
     GoRoute(
       path: '/timer',
       name: 'timerView',
       builder: (context, state) => const TimerView(),
     ),
-     GoRoute(
-      path: '/isolate', //*ruta para el demo de Isolate
-      name: 'isolate', //*nombre de la ruta
+    GoRoute(
+      path: '/isolate',
+      name: 'isolate',
       builder: (context, state) => const IsolateView(),
     ),
-
+    GoRoute(
+      name: 'dogListView',
+      path: '/dogs',
+      builder: (context, state) => const DogListView(),
+    ),
+    GoRoute(
+      name: 'dogDetailView',
+      path: '/dog/:breed',
+      builder: (context, state) {
+        final breed = state.pathParameters['breed']!;
+        return dogDetail.DogDetailView(breed: breed);
+      },
+    ),
   ],
 );
