@@ -108,6 +108,14 @@ class CustomDrawer extends StatelessWidget {
               context.goNamed('dogListView');
             },
           ),
+           ListTile(
+            leading: Icon(Icons.business),
+            title: Text('Establecimientos'),
+            onTap: () {
+              // Navegación con GoRouter
+              context.push('/establecimientos');
+            },
+          ),
         ],
       ),
     );
