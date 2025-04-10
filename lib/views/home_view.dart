@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hola_mundo/views/base_view.dart';
+import 'package:hola_mundo/services/auth_service.dart'; // Asegúrate de tener el import correcto para AuthService
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -25,6 +26,34 @@ class HomeView extends StatelessWidget {
                 ),
               ),
             ),
+
+            // FutureBuilder que muestra el token
+            FutureBuilder<String?>(
+              future: AuthService().getToken(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (snapshot.hasError) {
+                  return const Text('Error al cargar token');
+                }
+
+                final token = snapshot.data;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Text(
+                    'Token: ${token ?? "No hay token"}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              },
+            ),
+
             // TabBar
             const TabBar(
               tabs: <Widget>[
@@ -32,6 +61,7 @@ class HomeView extends StatelessWidget {
                 Tab(icon: Icon(Icons.handshake)),
               ],
             ),
+
             // Contenido de las pestañas
             Expanded(
               child: TabBarView(
@@ -42,12 +72,11 @@ class HomeView extends StatelessWidget {
                   ]),
 
                   // Segunda pestaña de saludo 
-              
                   Image.asset(
-                    ('assets/images/imagen_1.jpg'),
+                    'assets/images/imagen_1.jpg',
                     width: 200,
                     height: 200,
-                    fit: BoxFit.cover, 
+                    fit: BoxFit.cover,
                   ),
                 ],
               ),
@@ -75,7 +104,7 @@ class GridViewBuilder extends StatelessWidget {
           crossAxisCount: 4, // 1 columna
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 3.0, // Relación de aspecto
+          childAspectRatio: 3.0,
         ),
         itemBuilder: (context, index) {
           return Container(
@@ -85,7 +114,7 @@ class GridViewBuilder extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                items[index], // *Ahora los nombres son personalizados*
+                items[index],
                 style: const TextStyle(color: Colors.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),

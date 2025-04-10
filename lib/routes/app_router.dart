@@ -1,5 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:hola_mundo/views/auth/login_page.dart';
+import 'package:hola_mundo/views/auth/register_page.dart';
 import 'package:hola_mundo/views/establecimientos/establecimiento_list_view.dart';
 
 // Vistas generales
@@ -110,5 +112,16 @@ final GoRouter appRouter = GoRouter(
       path: '/establecimientos/create',
       builder: (context, state) => const EstablecimientoCreateView(),
 ),
+    //!Ruta para autenticacion
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/register',
+      name: 'register',
+      builder: (context, state) => const RegisterPage(),
+    ),
   ],
 );

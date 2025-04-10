@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hola_mundo/services/auth_service.dart';
+import 'package:hola_mundo/models/user.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
+  
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  //?  Variable para almacenar el usuario actual
+  User? user;
+  //
+
+  @override
+  void initState() {
+    super.initState();
+    //* Carga el usuario al iniciar el estado
+    //* Se utiliza Future.delayed para asegurarse de que la carga del usuario se realice después de que el widget se haya construido completamente.
+    Future.delayed(Duration.zero, () {
+      _loadUser();
+    });
+  }
+
+  Future<void> _loadUser() async {
+    //** Obtiene el usuario actual utilizando el servicio de autenticación
+    //** y actualiza el estado del widget con la información del usuario.
+    final u = await AuthService().getUser();
+    setState(() {
+      user = u;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +43,19 @@ class CustomDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.red, // Color primario de la aplicación
             ),
-            child: const Text(
-              'Menú',
-              style: TextStyle(
-                color:
-                    Colors
-                        .white, // Texto blanco para contrastar con el color primario
-                fontSize: 24,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user?.name ?? 'Usuario desconocido',
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  user?.email ?? '',
+                  style: const TextStyle(color: Colors.white70, fontSize: 14),
+                ),
+              ],
             ),
           ),
           ListTile(
@@ -116,6 +150,37 @@ class CustomDrawer extends StatelessWidget {
               context.push('/establecimientos');
             },
           ),
+          //! ruta para logout y login
+          ListTile(
+            leading: const Icon(Icons.login),
+            title: const Text('Iniciar sesión'),
+            onTap: () {
+              context.goNamed('login');
+              Navigator.pop(context); // Cierra el Drawer
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Cerrar sesión'),
+            onTap: () async {
+              final token = await AuthService().getToken();
+
+              if (token != null) {
+                await AuthService().logout();
+
+                if (!context.mounted) {
+                  return;
+                }
+                context.go('/login');
+              } else {
+                if (!context.mounted) return;
+                Navigator.pop(context); // Cierra el drawer
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No hay sesión activa.')),
+                );
+              }
+            },
+          ),  
         ],
       ),
     );
