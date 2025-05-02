@@ -6,6 +6,7 @@ import 'package:hola_mundo/views/establecimientos/establecimiento_list_view.dart
 
 // Vistas generales
 import 'package:hola_mundo/views/home_view.dart';
+import 'package:hola_mundo/views/provider/change_theme_view.dart';
 import 'package:hola_mundo/views/settings_view.dart';
 import 'package:hola_mundo/views/profile_view.dart';
 import 'package:hola_mundo/views/paso_parametros/detalle_screen.dart';
@@ -122,6 +123,12 @@ final GoRouter appRouter = GoRouter(
       path: '/register',
       name: 'register',
       builder: (context, state) => const RegisterPage(),
+    ),
+     //!Ruta para el demo de Provider
+    GoRoute(
+      path: '/cambiar-tema',
+      name: 'cambiar-tema',
+      builder: (context, state) => const ChangeThemeView(),
     ),
   ],
 );

@@ -181,6 +181,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
               }
             },
           ),  
+          //! ruta para cambiar el tema
+          ListTile(
+            leading: const Icon(Icons.color_lens),
+            title: const Text('Cambiar tema'),
+            onTap: () {
+              context.pushNamed('cambiar-tema');
+            },
+          ),
         ],
       ),
     );
